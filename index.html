@@ -1,0 +1,301 @@
+
+<div ng-app="MyApp">
+  <div class="container-fluid outerdiv" ng-controller="bookCtrl">
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><b>Google Books</b> <span class="span-style">library</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <noscript>
+    <div class="nojs">Javascript is either disabled or not supported in your browser. Please enable it or use a Javascript enabled browser.</div>
+  </noscript>
+
+  <div class="animated zoomInRight">
+    <div class="input-group search-bar">
+      <input type="text" ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" class="form-control" placeholder="Enter book title" autofocus />
+      <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
+    </div>
+      <div >
+    <div id="main-info" class="col-sm-8">
+        <img ng-src="{{bookInfo.imageLinks.smallThumbnail}}" class="thumbnail animated flip movie-poster">
+
+        <span class="span-outer">
+          <a href="https://books.google.com/{{ bookInfo.previewLink }}" target="_blank">{{bookInfo.title}}</a>
+        </span>, {{bookInfo.Year}}
+
+        <p><strong>Publisher:</strong> {{bookInfo.publisher}}
+      <br>
+          <strong>Published Date:</strong> {{bookInfo.publishedDate}}
+      </p>
+
+        <p>{{bookInfo.description}}</p>
+
+        <p class="outer-p">
+          <div class="inner-p">
+            <span class="label label-primary" >Authors :</span>
+            <span ng-repeat="author in bookInfo.authors">{{author}}, </span>
+          </div>
+          <div class="inner-p">
+            <span class="label label-primary">Categories :</span>
+            <span ng-repeat="categories in bookInfo.categories">{{categories}}
+          </div>
+        </p>
+
+  <div class=" col-md-4 outer-p-2"><strong>Ratings:</strong>
+          <br>
+          Average Rating: <span class="label label-success">{{bookInfo.averageRating}}</span>
+          <br>
+          Ratings Count: <span class="label label-success">{{bookInfo.ratingsCount}}</span>
+          <br>
+          Maturity Rating: <span class="label label-success">{{bookInfo.maturityRating.split('_').join(' ')}}</span>
+        </p>
+
+    </div>
+  <div class=" col-md-3 outer-p-2"><strong>Sale Info:</strong>
+          <br>
+          Country: <span class="label label-success">{{saleInfo.country}}</span>
+          <br>
+          Sale Ability: <span class="label label-success">{{ saleInfo.saleability.split('_').join(' ')}}</span>
+          <br>
+          List Price: <span class="label label-success">{{ saleInfo.listPrice.amount}} {{saleInfo.listPrice.currencyCode | lowercase}}</span>
+          <br>
+          Retail Price: <span class="label label-success">{{ saleInfo.listPrice.amount}} {{saleInfo.retailPrice.currencyCode | lowercase}}</span>
+        </p>
+      </div>
+      <div class=" col-md-5 outer-p-2">
+        <br><br><br>
+          <md-button class="md-raised md-warn" href="{{ bookInfo.previewLink }}" target="_blank"><strong>Download .pdf</strong></md-button>
+
+          <md-button class="md-raised md-warn" href="{{ bookInfo.previewLink }}" target="_blank"><strong>Buy this book!</strong></md-button>
+       </div>
+      </div>
+
+
+      <div ng-if="bookInfo.res==='False'">
+        No results found.
+      </div>
+
+
+
+    <div id="related-results" class=" animated bounce related-results">
+        Related Results:
+        <hr>
+
+        <ul class="rel-results">
+          <li ng-repeat="book in relatedBooks | orderBy:'volumeInfo.title'">
+            <a href="#" id="{{ $index + 1 }}" ng-click="update(book)">{{book.volumeInfo.title }}</a>,
+          </li>
+        </ul>
+    </div>
+   </div>
+  <div ng-if="!bookInfo">
+      Failed to load resource: the server responded with a status of 403 (Forbidden)
+        <br><br><br>
+      </div>
+ </div>
+</div> <!-- end of bookCtrl -->
+
+<!-- start of AppCtrl -->
+<div class="bottomLine animated zoomInRight">
+</div>
+<div class=" dialogdemoBasicUsage" id="popupContainer" ng-cloak="" ng-controller="AppCtrl" align="center">
+      Copyright &copy 2017
+     <span class="divider"></span>
+     <a href="#" ng-click="showTabDialog($event)">Developers</a>
+     <span class="divider"></span>
+     <a href="https://books.google.com/" target="_blank">Googlebook.com</a>
+  <div class="dialog-demo-prerendered">
+<script type="text/ng-template" id="tabDialog.tmpl.html"><md-dialog aria-label="">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Big Outsource WEB Developers</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:1200px;max-height:810px; ">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="DAINTY JEN A. MATUNDAN">
+          <md-content class="md-padding">
+          	<div class="col-md-12 top">
+            	<img src="http://www.freeiconspng.com/uploads/account-icon-7.png" class="dp">
+                  <h2>DAINTY JEN A. MATUNDAN</h2>
+                  <p>San Francisco Terrace Subd., San Pablo City, Laguna<br>
+                  0905 - 187 - 4221</p>
+
+            </div>
+            <div class=" modal-body" id="modalBody">
+            <h4><b>Personal Information</b></h4>
+            <p><b>Gender: </b>Female</p>
+            <p><b>Birthday:</b> May 22, 1997</p>
+            <p><b>Civil Status:</b> Single</p>
+            <p><b>Nationality:</b> Filipino</p>
+            <p><b>Language/Dialect:</b> English, Filipino</p>
+          </div>
+            <div class=" modal-body" id="modalBody">
+            <h4><b>Educational Attainment</b></h4>
+            <p><b>Tertiary:</b> <br>Dalubhasaan ng Lunsod ng San Pablo<br>
+              Bachelor of Science in Information Technology
+            </p>
+            <p><b>Secondary:</b> <br>Col. Lauro D. Dizon MNHS<br>
+              2014
+            </p>
+            <p><b>Elementary:</b> <br>San Pablo Central School<br>
+              2010
+            </p>
+          </div>
+          <div class=" modal-body" id="modalBody">
+          <h4><b>Skills</b></h4>
+          <p>-Basic Programming</p>
+          <p>-Web Designing, Web Programming (PHP)</p>
+          <p>-Multimedia Manipulation and Presentation (Image, Video, Sound, Animation)</p>
+          <p>-Computer Networking</p>
+          <p>-Expertise in word processing, powerpoint, Spreadsheet Softwares and Applications (e.g. Microsoft Office)</p>
+          <p>-Adobe Creative Suite (Adobe Photoshop, Adobe Flash)  </p>
+        </div>
+
+
+          </md-content>
+        </md-tab>
+        <md-tab label="DARWIN D. ROSALES">
+          <md-content class="md-padding">
+            <div class="col-md-12 top">
+            	<img src="http://www.freeiconspng.com/uploads/account-icon-7.png" class="dp">
+                  <h2>DARWIN D. ROSALES</h2>
+                  <p>Brgy. Sta. Monica, San Pablo City, Laguna<br>
+                  0909-110-7845
+                  </p>
+            </div>
+            <div class="modal-body" id="modalBody">
+            <h4><b>Personal Information</b></h4>
+            <p><b>Gender:</b> Male</p>
+            <p><b>Birthday:</b> February 22, 1992</p>
+            <p><b>Civil Status:</b> Single</p>
+            <p><b>Nationality:</b> Filipino</p>
+            <p><b>Language/Dialect:</b> English, Filipino</p>
+          </div>
+            <div class="modal-body" id="modalBody">
+            <h4><b>Educational Attainment</b></h4>
+            <p><b>Tertiary:</b> <br>Dalubhasaan ng Lunsod ng San Pablo<br>
+              Bachelor of Science in Information Technology
+            </p>
+            <p><b>Secondary:</b> <br>San Pablo City National High Schooln (SPCNHS-Main)<br>
+              2009
+            </p>
+            <p><b>Elementary:</b> <br>San Pablo Central Elementary School<br>
+              2005
+            </p>
+          </div>
+          <div class="modal-body" id="modalBody">
+          <h4><b>Skills</b></h4>
+          <p>-Basic Programming</p>
+          <p>-Web Designing, Web Programming (PHP)</p>
+          <p>-Multimedia Manipulation and Presentation (Image, Video, Sound, Animation)</p>
+          <p>-Computer Networking</p>
+          <p>-Expertise in word processing, powerpoint, Spreadsheet Softwares and Applications (e.g. Microsoft Office)</p>
+          <p>-Adobe Creative Suite (Adobe Photoshop, Adobe Flash)  </p>
+        </div>
+
+
+          </md-content>
+        </md-tab>
+        <md-tab label="CATHLYN JOY M. DIOMAMPO">
+          <md-content class="md-padding">
+            <div class="col-md-12 top">
+            	<img src="http://www.freeiconspng.com/uploads/account-icon-7.png" class="dp">
+                  <h2>CATHLYN JOY M. DIOMAMPO</h2>
+                  <p>Brgy. Pinagdanlayan, Dolores, Quezon<br>
+                  0907-419-0361
+                  </p>
+            </div>
+            <div class="modal-body" id="modalBody">
+            <h4><b>Personal Information</b></h4>
+            <p><b>Gender:</b> Female</p>
+            <p><b>Birthday:</b> June 21, 1998</p>
+            <p><b>Civil Status:</b> Single</p>
+            <p><b>Nationality:</b> Filipino</p>
+            <p><b>Language/Dialect:</b> English, Filipino</p>
+          </div>
+            <div class="modal-body" id="modalBody">
+            <h4><b>Educational Attainment</b></h4>
+            <p><b>Tertiary:</b> <br>Dalubhasaan ng Lunsod ng San Pablo<br>
+              Bachelor of Science in Information Technology
+            </p>
+            <p><b>Secondary:</b> <br>Dagatan National High School<br>
+              2014
+            </p>
+            <p><b>Elementary:</b> <br>Pinagdanlayan Elementary School<br>
+              2010
+            </p>
+          </div>
+          <div class="modal-body" id="modalBody">
+          <h4><b>Skills</b></h4>
+          <p>-Basic Programming</p>
+          <p>-Web Designing, Web Programming (HTML, CSS)</p>
+          <p>-Computer Networking</p>
+          <p>-Expertise in word processing, powerpoint, Spreadsheet Softwares and Applications (e.g. Microsoft Office)</p>
+          <p>-Adobe Creative Suite (Adobe Photoshop)  </p>
+        </div>
+
+
+          </md-content>
+        </md-tab>
+        <md-tab label="ARNOLD C. GUTIERREZ">
+          <md-content class="md-padding">
+          <div class="col-md-12 top">
+            <img src="http://www.freeiconspng.com/uploads/account-icon-7.png" class="dp">
+                  <h2>ARNOLD C. GUTIERREZ</h2>
+                  <p>Brgy. San Marcos, San Pablo City, Laguna<br>
+                  0912-498-6039
+                  </p>
+            </div>
+            <div class="modal-body" id="modalBody">
+            <h4><b>Personal Information</b></h4>
+            <p><b>Gender: </b>Male</p>
+            <p><b>Birthday:</b> March 18, 1996</p>
+            <p><b>Civil Status:</b> Single</p>
+            <p><b>Nationality:</b> Filipino</p>
+            <p><b>Language/Dialect:</b> English, Filipino</p>
+          </div>
+            <div class="modal-body" id="modalBody">
+            <h4><b>Educational Attainment</b></h4>
+            <p><b>Tertiary:</b> <br>Dalubhasaan ng Lunsod ng San Pablo<br>
+              Bachelor of Science in Information Technology
+            </p>
+            <p><b>Secondary:</b> <br>VYP-MSC Institute of Technology<br>
+              2012
+            </p>
+            <p><b>Elementary:</b> <br>San Pablo Central Elementary School<br>
+              2008
+            </p>
+          </div>
+          <div class="modal-body" id="modalBody">
+          <h4><b>Skills</b></h4>
+          <p>-Basic Programming</p>
+          <p>-Web Designing, Web Programming (PHP)</p>
+          <p>-Multimedia Manipulation and Presentation (Image, Video, Sound, Animation)</p>
+          <p>-Computer Networking</p>
+          <p>-Expertise in word processing, powerpoint, Spreadsheet Softwares and Applications (e.g. Microsoft Office)</p>
+          <p>-Adobe Creative Suite (Adobe Photoshop, Adobe Flash)  </p>
+        </div>
+
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+
+
+  </form>
+</md-dialog>
+</script></div>
+</div>
+
+</div>
+
+  
